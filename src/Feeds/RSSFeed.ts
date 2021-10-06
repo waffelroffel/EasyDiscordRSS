@@ -30,6 +30,7 @@ export default class RSSFeed extends Feed {
 		return site.rss.channel.item
 			.filter(item => !this.history.has(item.link))
 			.map(item => {
+				this.history.set(item.link, new Date().valueOf())
 				return {
 					title: item.title,
 					url: item.link,

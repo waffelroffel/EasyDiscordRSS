@@ -58,6 +58,7 @@ export default class RSSBot {
 	}
 
 	constructor(token: string, opts?: RSSOpts) {
+		// change to client or token parameter
 		this.opts = resolveOptions(opts)
 		this.setupOnReady()
 		this.setupOnCmd()
@@ -139,6 +140,7 @@ export default class RSSBot {
 			if (cmd.commandName === "rss") return this.rssCommands(cmd)
 			if (cmd.commandName === "feed") return this.feedCommands(cmd)
 		})
+		// list all avaiable feeds
 	}
 
 	rssCommands(cmd: CommandInteraction): void {
@@ -241,7 +243,7 @@ export default class RSSBot {
 	}
 
 	listFeedsInChannel(chan: TextChannel): string {
-		const feeds = [...this.feeds.values()]
+		const feeds = [...this.allFeeds.values()]
 			.flatMap(feed =>
 				feed.channels.map(chan => [feed.name, feed.url, chan.id])
 			)
