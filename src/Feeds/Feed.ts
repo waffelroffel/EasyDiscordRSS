@@ -24,12 +24,13 @@ export default abstract class Feed {
 		if (this.channels.length === 0) return
 		try {
 			const items = await this._fetch()
-			const embed = new MessageEmbed().setTitle(
-				`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`
-			)
+			if (items.length === 0) return
+			const embed = new MessageEmbed()
+				.setTitle(`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`)
+				.setURL(this.url)
 			items.forEach(item =>
 				embed.addField(
-					item.title.replaceAll("&#039;", "'"),
+					item.title.replaceAll("&#039;", "'").replaceAll("&amp;", "&"),
 					item.url ?? "\u200B"
 				)
 			)
