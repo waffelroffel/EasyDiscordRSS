@@ -1,6 +1,6 @@
 {
 	"name": "rssbot",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "Turn your Discord server into a RSS feed",
 	"main": "dist/src/index.js",
 	"types": "dist/src/index.d.ts",
@@ -8,10 +8,12 @@
 		"rssbot": "dist/bin/main.js"
 	},
 	"scripts": {
-		"build": "tsc",
-		"install": "tsc & npm i -g .",
+		"basic-install": "tsc && npm i -g .",
 		"update-cmd": "ts-node bin/main.ts register",
-		"delete-cmd": "ts-node bin/main.ts unregister"
+		"delete-cmd": "ts-node bin/main.ts unregister",
+		"update-lock": "npm i",
+		"dist": "tsc",
+		"publish-npm": "npm publish"
 	},
 	"repository": {
 		"type": "git",
