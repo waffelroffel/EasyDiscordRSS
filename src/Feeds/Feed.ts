@@ -3,9 +3,9 @@ import { existsSync, promises, readFileSync } from "fs"
 import { join } from "path"
 import History, { PrunableHistory } from "./History"
 
-export interface Article {
+export interface Post {
 	title: string
-	link?: string
+	url?: string
 }
 
 export default abstract class Feed {
@@ -18,19 +18,23 @@ export default abstract class Feed {
 
 	color: ColorResolvable = genRandColor()
 
-	protected abstract _fetch(): AsyncGenerator<Article, void, void>
+	protected abstract _fetch(): Promise<Post[]>
 
 	async fetch(): Promise<void> {
 		if (this.channels.length === 0) return
 		try {
-			for await (const article of this._fetch()) {
-				const embed = new MessageEmbed().setTitle(
-					article.title.replaceAll("&#039;", "'")
+			const items = await this._fetch()
+			const embed = new MessageEmbed().setTitle(
+				`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`
+			)
+			items.forEach(item =>
+				embed.addField(
+					item.title.replaceAll("&#039;", "'"),
+					item.url ?? "\u200B"
 				)
-				if (article.link) embed.setURL(article.link)
-				embed.setColor(this.color)
-				this.send(embed)
-			}
+			)
+			embed.setColor(this.color)
+			this.send(embed)
 		} catch (err) {
 			this.send(`[ERROR:${this.name}]: ${(err as Error).message}`)
 		}

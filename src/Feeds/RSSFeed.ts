@@ -1,6 +1,6 @@
 import axios from "axios"
 import { parse } from "fast-xml-parser"
-import Feed, { Article } from "./Feed"
+import Feed, { Post } from "./Feed"
 import { PrunableHistory } from "./History"
 
 interface Item {
@@ -24,16 +24,16 @@ export default class RSSFeed extends Feed {
 		this.url = url
 	}
 
-	async *_fetch(): AsyncGenerator<Article, void, void> {
+	async _fetch(): Promise<Required<Post>[]> {
 		const res = await axios.get<string>(this.url)
 		const site: Site = parse(res.data)
-		for (const item of site.rss.channel.item) {
-			if (this.history.has(item.link)) continue
-			this.history.set(item.link, new Date().getTime())
-			yield {
-				title: `[${this.name.toUpperCase()}] ${item.title}`,
-				link: item.link,
-			}
-		}
+		return site.rss.channel.item
+			.filter(item => !this.history.has(item.link))
+			.map(item => {
+				return {
+					title: item.title,
+					url: item.link,
+				}
+			})
 	}
 }
