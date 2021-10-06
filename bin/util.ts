@@ -48,7 +48,6 @@ export async function ask(q: string): Promise<string> {
 	return new Promise(resolve => readline.question(q, resolve))
 }
 
-export function close(): never {
+export function close(): void {
 	readline.close()
-	exit(0)
 }

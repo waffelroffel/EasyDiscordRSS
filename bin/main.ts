@@ -16,18 +16,20 @@ async function main(): Promise<void> {
 	switch (process.argv[2]) {
 		case "register":
 			await register()
-			break
+			close()
+			return
 		case "unregister":
 			await unregister()
-			break
+			close()
+			return
 		case "unregisterall":
 			await unregister(true)
-			break
+			close()
+			return
 		case "run":
 			await run()
-			break
+			return
 	}
-	close()
 }
 
 async function register(): Promise<void> {
