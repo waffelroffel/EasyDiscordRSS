@@ -1,0 +1,46 @@
+{
+	"name": "rssbot",
+	"version": "1.0.0",
+	"description": "Turn your Discord server into a RSS feed",
+	"main": "dist/src/index.js",
+	"types": "dist/src/index.d.ts",
+	"bin": {
+		"rssbot": "dist/bin/main.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"install": "tsc & npm i -g .",
+		"update-cmd": "ts-node bin/main.ts register",
+		"delete-cmd": "ts-node bin/main.ts unregister"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/waffelroffel/DiscordNewsBot.git"
+	},
+	"keywords": [
+		"discord",
+		"bot",
+		"rss"
+	],
+	"author": "Erik Liu <waffelroffel@gmail.com> (https://github.com/waffelroffel)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/waffelroffel/DiscordNewsBot/issues"
+	},
+	"homepage": "https://github.com/waffelroffel/DiscordNewsBot#readme",
+	"dependencies": {
+		"axios": "^0.22.0",
+		"discord.js": "^13.1.0",
+		"fast-xml-parser": "^3.20.3",
+		"slash-commands": "^1.5.0"
+	},
+	"devDependencies": {
+		"@types/node": "^16.10.2",
+		"typescript": "^4.4.3"
+	},
+	"files": [
+		"dist",
+		"LICENSE",
+		"README.md"
+	]
+}
