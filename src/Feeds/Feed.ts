@@ -1,5 +1,6 @@
 import { ColorResolvable, MessageEmbed, TextChannel } from "discord.js"
 import { existsSync, promises, readFileSync } from "fs"
+import { decode } from "html-entities"
 import { join } from "path"
 import History, { PrunableHistory } from "./History"
 
@@ -29,10 +30,7 @@ export default abstract class Feed {
 				.setTitle(`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`)
 				.setURL(this.url)
 			items.forEach(item =>
-				embed.addField(
-					item.title.replaceAll("&#039;", "'").replaceAll("&amp;", "&"),
-					item.url ?? "\u200B"
-				)
+				embed.addField(decode(item.title), item.url ?? "\u200B")
 			)
 			embed.setColor(this.color)
 			this.send(embed)

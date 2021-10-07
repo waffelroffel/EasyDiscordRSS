@@ -54,7 +54,7 @@ Turn any site into a rssbot compatable source by extending the `Feed` class.
 
 ```ts
 class SomeRandomSiteFeed extends Feed {
-	async _fetch(): Promise<Article> {
+	async _fetch(): Promise<Post> {
 		/*
         get site data and scrape
         */
