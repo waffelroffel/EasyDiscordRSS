@@ -26,17 +26,33 @@ export default abstract class Feed {
 		try {
 			const items = await this._fetch()
 			if (items.length === 0) return
-			const embed = new MessageEmbed()
-				.setTitle(`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`)
-				.setURL(this.url)
-			items.forEach(item =>
-				embed.addField(decode(item.title), item.url ?? "\u200B")
-			)
-			embed.setColor(this.color)
-			this.send(embed)
+			for (const bucket of this.bucketify(items, 5)) {
+				const embed = new MessageEmbed()
+					.setTitle(
+						`[${this.name.toUpperCase()}] ${new URL(this.url).hostname}`
+					)
+					.setURL(this.url)
+				bucket.forEach(item =>
+					embed.addField(decode(item.title), item.url ?? "\u200B")
+				)
+				embed.setColor(this.color)
+				this.send(embed)
+			}
 		} catch (err) {
 			this.send(`[ERROR:${this.name}]: ${(err as Error).message}`)
 		}
+	}
+
+	bucketify(posts: Post[], maxsize: number): Post[][] {
+		const buckets: Post[][] = []
+		const numbuckets = Math.floor(posts.length / maxsize)
+		const rest = posts.length % maxsize
+		for (let n = 0; n < numbuckets; n++) {
+			const bucket = posts.slice(n * maxsize, n * maxsize + maxsize)
+			buckets.push(bucket)
+		}
+		if (rest > 0) buckets.push(posts.slice(-rest))
+		return buckets
 	}
 
 	send(msg: string | MessageEmbed): void {

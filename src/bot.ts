@@ -122,11 +122,11 @@ export default class RSSBot {
 				feed.saveHistory(HISTORY_FOLDER)
 			})
 			setInterval(
-				() => this.feeds.forEach(feed => feed.fetch()),
+				() => this.allFeeds.forEach(feed => feed.fetch()),
 				this.opts.fetchInterval
 			)
 			setInterval(() => {
-				this.feeds.forEach(feed => {
+				this.allFeeds.forEach(feed => {
 					feed.pruneHistory(this.opts.pruneThreshold)
 					feed.saveHistory(HISTORY_FOLDER)
 				})
@@ -267,7 +267,7 @@ export default class RSSBot {
 
 	saveSettingAndHistory(): string {
 		this.saveSetting()
-		this.feeds.forEach(async feed => {
+		this.allFeeds.forEach(async feed => {
 			feed.pruneHistory(this.opts.pruneThreshold)
 			feed.saveHistory(HISTORY_FOLDER)
 		})
@@ -275,7 +275,7 @@ export default class RSSBot {
 	}
 
 	pruneHistory(): string {
-		this.feeds.forEach(async feed =>
+		this.allFeeds.forEach(async feed =>
 			feed.pruneHistory(this.opts.pruneThreshold)
 		)
 		return "Removing old items from history"
@@ -305,6 +305,14 @@ export default class RSSBot {
 		if (!feed) return "Feed doesn't exist."
 		if (!feed.removeChannel(chan)) return "Feed not in channel."
 		return "Feed removed from channel"
+	}
+
+	loadCustomFeedHistory(): void {
+		this.customFeeds.forEach(feed => {
+			feed.loadHistory(HISTORY_FOLDER)
+			feed.pruneHistory(this.opts.pruneThreshold)
+			feed.saveHistory(HISTORY_FOLDER)
+		})
 	}
 }
 
