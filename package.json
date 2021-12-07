@@ -1,6 +1,6 @@
 {
 	"name": "rssbot",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"description": "Turn your Discord server into a RSS feed",
 	"main": "dist/src/index.js",
 	"types": "dist/src/index.d.ts",
@@ -17,7 +17,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/waffelroffel/DiscordNewsBot.git"
+		"url": "git+https://github.com/waffelroffel/EasyDiscordRSS.git"
 	},
 	"keywords": [
 		"discord",
@@ -27,9 +27,9 @@
 	"author": "Erik Liu <waffelroffel@gmail.com> (https://github.com/waffelroffel)",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/waffelroffel/DiscordNewsBot/issues"
+		"url": "https://github.com/waffelroffel/EasyDiscordRSS/issues"
 	},
-	"homepage": "https://github.com/waffelroffel/DiscordNewsBot#readme",
+	"homepage": "https://github.com/waffelroffel/EasyDiscordRSS#readme",
 	"dependencies": {
 		"axios": "^0.22.0",
 		"discord.js": "^13.1.0",
