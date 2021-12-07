@@ -6,6 +6,7 @@ import { PrunableHistory } from "./History"
 interface Item {
 	title: string
 	link: string
+	guid?: string
 }
 
 interface Site {
@@ -28,9 +29,9 @@ export default class RSSFeed extends Feed {
 		const res = await axios.get<string>(this.url)
 		const site: Site = parse(res.data)
 		return site.rss.channel.item
-			.filter(item => !this.history.has(item.link))
+			.filter(item => !this.history.has(item.guid ?? item.link))
 			.map(item => {
-				this.history.set(item.link, new Date().valueOf())
+				this.history.set(item.guid ?? item.link, new Date().valueOf())
 				return {
 					title: item.title,
 					url: item.link,

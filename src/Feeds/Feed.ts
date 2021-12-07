@@ -44,6 +44,7 @@ export default abstract class Feed {
 	}
 
 	bucketify(posts: Post[], maxsize: number): Post[][] {
+		if (posts.length <= maxsize) return [posts]
 		const buckets: Post[][] = []
 		const numbuckets = Math.floor(posts.length / maxsize)
 		const rest = posts.length % maxsize
@@ -51,7 +52,8 @@ export default abstract class Feed {
 			const bucket = posts.slice(n * maxsize, n * maxsize + maxsize)
 			buckets.push(bucket)
 		}
-		if (rest > 0) buckets.push(posts.slice(-rest))
+		if (rest === 1) buckets[buckets.length - 1].push(posts[posts.length - 1])
+		else if (rest > 1) buckets.push(posts.slice(-rest))
 		return buckets
 	}
 

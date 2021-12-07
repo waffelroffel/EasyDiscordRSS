@@ -31,7 +31,7 @@ export interface RSSOpts {
 const DEFAULT_OPTS: Required<RSSOpts> = {
 	fetchInterval: 1000 * 60 * 10, // 10 min
 	saveInterval: 1000 * 60 * 60, // 1 hour
-	pruneThreshold: 1000 * 60 * 60 * 24 * 7, // 1 week
+	pruneThreshold: 1000 * 60 * 60 * 24 * 7 * 4, // 1 month
 }
 
 function resolveOptions(opts?: RSSOpts): Required<RSSOpts> {
